@@ -1,0 +1,10 @@
+AddDefaultCharset UTF-8
+
+ErrorDocument 403 /errors/page/404.phtml
+ErrorDocument 404 /errors/page/404.phtml
+ErrorDocument 500 /errors/page/500.phtml
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [QSA,L]
