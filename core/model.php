@@ -10,7 +10,7 @@ class Model
         $Router = singleton('\Core\Router');
         $module = $Router->getModule();
 
-        $modelClass = '\\Modules\\' . ucfirst($module) . '\\Model\\' . ucfirst($modelName);
+        $modelClass = '\\Modules\\' . ucfirst($module) . '\\Model\\' . ucfirst(trim(str_replace('/', '\\', $modelName), '\\'));
         return(singleton($modelClass));
     }
 
