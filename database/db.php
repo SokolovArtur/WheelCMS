@@ -36,34 +36,22 @@ class Db extends \mysqli
         $returnResult = FALSE;
         switch ($returnType) {
             case 'boolean':
-                if (is_bool($result)) {
-                    $returnResult = $result;
-                }
+                if (is_bool($result)) $returnResult = $result;
                 break;
             case 'array':
-                if (is_object($result)) {
-                    $returnResult = $result->fetch_all();
-                }
+                if (is_object($result)) $returnResult = $result->fetch_all();
                 break;
             case 'array_row':
-                if (is_object($result)) {
-                    $returnResult = $result->fetch_array();
-                }
+                if (is_object($result)) $returnResult = $result->fetch_array();
                 break;
             case 'object':
-                if (is_object($result)) {
-                    $returnResult = $result->fetch_fields();
-                }
+                if (is_object($result)) $returnResult = $result->fetch_fields();
                 break;
             case 'object_row':
-                if (is_object($result)) {
-                    $returnResult = $result->fetch_object();
-                }
+                if (is_object($result)) $returnResult = $result->fetch_object();
                 break;
             case 'num_rows':
-                if (is_object($result)) {
-                    $returnResult = $result->num_rows;
-                }
+                if (is_object($result)) $returnResult = $result->num_rows;
                 break;
         }
 
