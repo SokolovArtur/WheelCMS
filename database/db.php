@@ -25,40 +25,53 @@ class Db extends \mysqli
         $this->set_charset('utf8');
     }
 
-    public function query($sql, $returnType = 'array')
+    public function query($sql, $returnType = 'boolean')
     {
         $result = parent::query($sql);
 
         if (!$result) {
-            throw new \Errors\Exception_Handler("<strong>Не удалось выполнить SQL-запрос</strong>: {$this->error}");
+            throw new \Errors\Exception_Handler("<strong>E_WARNING</strong>: {$this->error} in <strong>{$sql}</strong>");
         }
 
+        $returnResult = FALSE;
         switch ($returnType) {
+            case 'boolean':
+                if (is_bool($result)) {
+                    $returnResult = $result;
+                }
+                break;
             case 'array':
-                $return = $result->fetch_all();
+                if (is_object($result)) {
+                    $returnResult = $result->fetch_all();
+                }
                 break;
             case 'array_row':
-                $return = $result->fetch_array();
+                if (is_object($result)) {
+                    $returnResult = $result->fetch_array();
+                }
                 break;
             case 'object':
-                $return = $result->fetch_fields();
+                if (is_object($result)) {
+                    $returnResult = $result->fetch_fields();
+                }
                 break;
             case 'object_row':
-                $return = $result->fetch_object();
-                break;
-            case 'row':
-                $return = $result->fetch_assoc();
+                if (is_object($result)) {
+                    $returnResult = $result->fetch_object();
+                }
                 break;
             case 'num_rows':
-                $return = $result->num_rows;
+                if (is_object($result)) {
+                    $returnResult = $result->num_rows;
+                }
                 break;
-            default:
-                $return = FALSE;
         }
 
-        $result->close();
+        if (!$returnResult) {
+            throw new \Errors\Exception_Handler("Не удалось обработать результат SQL-запроса <strong>{$sql}</strong> как тип <strong>{$returnType}</strong>");
+        }
 
-        return($return);
+        return($returnResult);
     }
 
 }
