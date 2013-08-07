@@ -19,7 +19,7 @@ class Error_Handler
     {
         $errorInfo = error_get_last();
         if (isset($errorInfo)) {
-            $errorsTypes = array(0, 1, 4, 16, 32, 64, 128);
+            $errorsTypes = array(0, 1, 4, 16, 64);
 
             if (array_search($errorInfo['type'], $errorsTypes)) {
                 $typeError = self::getNameErrors($errorInfo['type']);
