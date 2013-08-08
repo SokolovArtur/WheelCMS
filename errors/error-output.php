@@ -5,13 +5,19 @@ namespace Errors;
 class Error_Output
 {
 
-    protected $debug = TRUE;
+    private $_config = array();
+
+    public function __construct()
+    {
+        require_once('config.php');
+        $this->_config = $config;
+    }
 
     public function displayErrors($message)
     {
         ob_clean();
 
-        if ($this->debug) {
+        if ($this->_config['debug']) {
             require_once('page/error.phtml');
         } else {
             error_log($message);

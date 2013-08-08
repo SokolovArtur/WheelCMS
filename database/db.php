@@ -5,21 +5,18 @@ namespace Database;
 class Db extends \mysqli
 {
 
-    private $_host = 'localhost';
-    private $_user = 'root';
-    private $_password;
-    private $_db;
-
     public function __construct()
     {
+        require_once('config.php');
+
         parent::__construct(
-            $this->_host,
-            $this->_user,
-            $this->_password
+            $config['host'],
+            $config['user'],
+            $config['password']
         );
 
-        if (!$this->select_db($this->_db)) {
-            throw new \Errors\Exception_Handler("Не удалось соединиться c базой данных <strong>{$this->_db}</strong>");
+        if (!$this->select_db($config['db'])) {
+            throw new \Errors\Exception_Handler("Не удалось соединиться c базой данных <strong>{$config['db']}</strong>");
         }
 
         $this->set_charset('utf8');
